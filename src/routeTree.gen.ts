@@ -15,6 +15,7 @@ import { Route as HistoryRouteImport } from './routes/history'
 import { Route as OnboardingRouteImport } from './routes/onboarding'
 import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as ProgressRouteImport } from './routes/progress'
+import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as NutritionIndexRouteImport } from './routes/nutrition.index'
 import { Route as NutritionSlugRouteImport } from './routes/nutrition.$slug'
 import { Route as SessionWorkoutIdRouteImport } from './routes/session.$workoutId'
@@ -51,6 +52,11 @@ const ProgressRoute = ProgressRouteImport.update({
   path: '/progress',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SettingsRoute = SettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const NutritionIndexRoute = NutritionIndexRouteImport.update({
   id: '/nutrition/',
   path: '/nutrition/',
@@ -84,6 +90,7 @@ export interface FileRoutesByFullPath {
   '/onboarding': typeof OnboardingRoute
   '/profile': typeof ProfileRoute
   '/progress': typeof ProgressRoute
+  '/settings': typeof SettingsRoute
   '/nutrition/$slug': typeof NutritionSlugRoute
   '/session/$workoutId': typeof SessionWorkoutIdRoute
   '/workouts/$workoutId': typeof WorkoutsWorkoutIdRoute
@@ -97,6 +104,7 @@ export interface FileRoutesByTo {
   '/onboarding': typeof OnboardingRoute
   '/profile': typeof ProfileRoute
   '/progress': typeof ProgressRoute
+  '/settings': typeof SettingsRoute
   '/nutrition/$slug': typeof NutritionSlugRoute
   '/session/$workoutId': typeof SessionWorkoutIdRoute
   '/workouts/$workoutId': typeof WorkoutsWorkoutIdRoute
@@ -111,6 +119,7 @@ export interface FileRoutesById {
   '/onboarding': typeof OnboardingRoute
   '/profile': typeof ProfileRoute
   '/progress': typeof ProgressRoute
+  '/settings': typeof SettingsRoute
   '/nutrition/$slug': typeof NutritionSlugRoute
   '/session/$workoutId': typeof SessionWorkoutIdRoute
   '/workouts/$workoutId': typeof WorkoutsWorkoutIdRoute
@@ -126,6 +135,7 @@ export interface FileRouteTypes {
     | '/onboarding'
     | '/profile'
     | '/progress'
+    | '/settings'
     | '/nutrition/$slug'
     | '/session/$workoutId'
     | '/workouts/$workoutId'
@@ -139,6 +149,7 @@ export interface FileRouteTypes {
     | '/onboarding'
     | '/profile'
     | '/progress'
+    | '/settings'
     | '/nutrition/$slug'
     | '/session/$workoutId'
     | '/workouts/$workoutId'
@@ -152,6 +163,7 @@ export interface FileRouteTypes {
     | '/onboarding'
     | '/profile'
     | '/progress'
+    | '/settings'
     | '/nutrition/$slug'
     | '/session/$workoutId'
     | '/workouts/$workoutId'
@@ -166,6 +178,7 @@ export interface RootRouteChildren {
   OnboardingRoute: typeof OnboardingRoute
   ProfileRoute: typeof ProfileRoute
   ProgressRoute: typeof ProgressRoute
+  SettingsRoute: typeof SettingsRoute
   NutritionSlugRoute: typeof NutritionSlugRoute
   SessionWorkoutIdRoute: typeof SessionWorkoutIdRoute
   WorkoutsWorkoutIdRoute: typeof WorkoutsWorkoutIdRoute
@@ -217,6 +230,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProgressRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/nutrition/': {
       id: '/nutrition/'
       path: '/nutrition'
@@ -262,6 +282,7 @@ const rootRouteChildren: RootRouteChildren = {
   OnboardingRoute: OnboardingRoute,
   ProfileRoute: ProfileRoute,
   ProgressRoute: ProgressRoute,
+  SettingsRoute: SettingsRoute,
   NutritionSlugRoute: NutritionSlugRoute,
   SessionWorkoutIdRoute: SessionWorkoutIdRoute,
   WorkoutsWorkoutIdRoute: WorkoutsWorkoutIdRoute,
@@ -271,3 +292,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
