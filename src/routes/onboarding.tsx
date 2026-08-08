@@ -62,9 +62,9 @@ function OnboardingScreen() {
 
   const validateAboutYou = () => {
     const next: Record<string, string> = {};
-    if (numberOrNull(age, 10, 100) === undefined) next.age = "Enter an age between 10 and 100, or leave it blank.";
-    if (numberOrNull(height, 80, 250) === undefined) next.height = "Enter a height between 80 and 250 cm, or leave it blank.";
-    if (numberOrNull(weight, 20, 400) === undefined) next.weight = "Enter a weight between 20 and 400 kg, or leave it blank.";
+    if (numberOrNull(age, 10, 100) === undefined) next["age"] = "Enter an age between 10 and 100, or leave it blank.";
+    if (numberOrNull(height, 80, 250) === undefined) next["height"] = "Enter a height between 80 and 250 cm, or leave it blank.";
+    if (numberOrNull(weight, 20, 400) === undefined) next["weight"] = "Enter a weight between 20 and 400 kg, or leave it blank.";
     setErrors(next);
     return Object.keys(next).length === 0;
   };
@@ -157,9 +157,9 @@ function OnboardingScreen() {
                     value={age}
                     onChange={(e) => setAge(e.target.value)}
                     placeholder="28"
-                    aria-invalid={errors.age ? true : undefined}
+                    aria-invalid={errors["age"] ? true : undefined}
                   />
-                  {errors.age ? <p className="text-xs text-destructive">{errors.age}</p> : null}
+                  {errors["age"] ? <p className="text-xs text-destructive">{errors["age"]}</p> : null}
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="ob-height">Height (cm)</Label>
@@ -169,9 +169,9 @@ function OnboardingScreen() {
                     value={height}
                     onChange={(e) => setHeight(e.target.value)}
                     placeholder="175"
-                    aria-invalid={errors.height ? true : undefined}
+                    aria-invalid={errors["height"] ? true : undefined}
                   />
-                  {errors.height ? <p className="text-xs text-destructive">{errors.height}</p> : null}
+                  {errors["height"] ? <p className="text-xs text-destructive">{errors["height"]}</p> : null}
                 </div>
               </div>
               <div className="space-y-2">
@@ -182,9 +182,9 @@ function OnboardingScreen() {
                   value={weight}
                   onChange={(e) => setWeight(e.target.value)}
                   placeholder="70"
-                  aria-invalid={errors.weight ? true : undefined}
+                  aria-invalid={errors["weight"] ? true : undefined}
                 />
-                {errors.weight ? <p className="text-xs text-destructive">{errors.weight}</p> : null}
+                {errors["weight"] ? <p className="text-xs text-destructive">{errors["weight"]}</p> : null}
               </div>
               <fieldset className="space-y-2">
                 <legend className="text-sm font-medium">Gender</legend>
