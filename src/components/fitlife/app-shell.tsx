@@ -31,7 +31,7 @@ export function AppShell({
         <div className="mx-auto flex max-w-lg items-center gap-3 px-4 py-3">
           {backTo ? (
             <Link
-              to={backTo}
+              to={backTo as "/"}
               aria-label="Go back"
               className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-secondary text-secondary-foreground transition-colors hover:bg-accent"
             >
