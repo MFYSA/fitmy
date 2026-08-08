@@ -12,6 +12,7 @@ import { getExercise } from "@/lib/fitlife/exercises";
 import { formatDuration } from "@/lib/fitlife/logic";
 import { useFitLife } from "@/lib/fitlife/store";
 import { getWorkout } from "@/lib/fitlife/workouts";
+import type { Workout } from "@/lib/fitlife/types";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/workouts/$workoutId")({
@@ -80,7 +81,7 @@ const CATEGORY_EMOJI: Record<string, string> = {
 };
 
 function WorkoutDetail() {
-  const { workout } = Route.useLoaderData();
+  const { workout } = Route.useLoaderData() as { workout: Workout };
   const { state, toggleFavorite } = useFitLife();
   const isFavorite = state.favorites.includes(workout.id);
 
