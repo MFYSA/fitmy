@@ -127,17 +127,12 @@ function SessionScreen() {
 
   React.useEffect(() => {
     if (phase !== "done" || savedXp !== null) return;
-    const minutes = Math.max(1, Math.round(elapsed / 60));
     const result = completeWorkout({
-      workoutId: workout.id,
-      workoutName: workout.name,
-      category: workout.category,
+      workout,
       durationSeconds: elapsed,
-      minutes,
-      calories: Math.max(1, Math.round((workout.calories / workout.durationMinutes) * minutes)),
       exercisesCompleted: steps.length,
     });
-    setSavedXp(result.xpEarned);
+    setSavedXp(result.xp);
   }, [phase, savedXp, elapsed, completeWorkout, workout, steps.length]);
 
   const totalSeconds = steps.reduce((sum, step) => sum + step.seconds + step.restSeconds, 0);
