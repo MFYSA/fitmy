@@ -64,7 +64,7 @@ function ProgressScreen() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-xs font-medium text-muted-foreground">Level {level.level}</p>
-              <p className="text-lg font-bold">{level.title}</p>
+              <p className="text-lg font-bold">{state.progress.xp} XP total</p>
             </div>
             <Trophy className="h-6 w-6 text-primary" aria-hidden="true" />
           </div>
@@ -74,8 +74,8 @@ function ProgressScreen() {
             label={`Progress to level ${level.level + 1}`}
           />
           <p className="mt-2 text-xs text-muted-foreground">
-            {level.xpToNext > 0
-              ? `${level.xpToNext} XP to level ${level.level + 1}`
+            {level.xpToNextLevel !== null
+              ? `${level.xpToNextLevel} XP to level ${level.level + 1}`
               : "Max level reached — legend status."}
           </p>
         </section>
@@ -243,9 +243,9 @@ function BmiSection() {
 
       {bmi ? (
         <div className="mt-4 rounded-xl bg-secondary p-4 text-center">
-          <p className={cn("text-3xl font-bold", BMI_TONES[bmi.category])}>{bmi.value.toFixed(1)}</p>
+          <p className={cn("text-3xl font-bold", BMI_TONES[bmi.category])}>{bmi.bmi.toFixed(1)}</p>
           <p className="text-sm font-medium">{bmi.category}</p>
-          <p className="mt-1 text-xs text-muted-foreground">{bmi.advice}</p>
+          <p className="mt-1 text-xs text-muted-foreground">{bmi.explanation}</p>
         </div>
       ) : (
         <p className="mt-3 text-xs text-muted-foreground">
