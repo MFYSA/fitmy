@@ -250,18 +250,24 @@ function slugify(value: string): string {
   return value.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
 }
 
-function buildWorkout(spec: CategorySpec, index: number): Workout {
-  const item = spec.items[index];
+type WorkoutItem = CategorySpec["items"][number];
+
+function fallbackExerciseId(spec: CategorySpec): string {
+  return spec.pool[0] ?? "plank";
+}
+
+function buildWorkout(spec: CategorySpec, item: WorkoutItem, index: number): Workout {
   const offset = index * 3;
   const exercises: WorkoutExercise[] = [];
+  const scale = item.difficulty === "Advanced" ? 1.25 : item.difficulty === "Beginner" ? 0.85 : 1;
 
   for (let i = 0; i < item.count; i += 1) {
-    const exerciseId = spec.pool[(offset + i) % spec.pool.length];
+    const exerciseId = spec.pool[(offset + i) % spec.pool.length] ?? fallbackExerciseId(spec);
     const exercise = EXERCISE_MAP[exerciseId];
-    const scale = item.difficulty === "Advanced" ? 1.25 : item.difficulty === "Beginner" ? 0.85 : 1;
+    const baseSeconds = exercise?.seconds ?? 30;
     exercises.push({
       exerciseId,
-      seconds: Math.round((exercise.seconds * scale) / 5) * 5,
+      seconds: Math.round((baseSeconds * scale) / 5) * 5,
       restSeconds: spec.restSeconds,
     });
   }
@@ -269,12 +275,12 @@ function buildWorkout(spec: CategorySpec, index: number): Workout {
   const workSeconds = exercises.reduce((sum, e) => sum + e.seconds, 0);
   const restTotal = spec.restSeconds * Math.max(0, exercises.length - 1);
   const intensitySum = exercises.reduce(
-    (sum, e) => sum + e.seconds * EXERCISE_MAP[e.exerciseId].intensity,
+    (sum, e) => sum + e.seconds * (EXERCISE_MAP[e.exerciseId]?.intensity ?? 1),
     0,
   );
 
   const equipment = Array.from(
-    new Set(exercises.map((e) => EXERCISE_MAP[e.exerciseId].equipment)),
+    new Set(exercises.map((e) => EXERCISE_MAP[e.exerciseId]?.equipment ?? "None")),
   ) as Equipment[];
 
   return {
@@ -292,8 +298,9 @@ function buildWorkout(spec: CategorySpec, index: number): Workout {
 }
 
 export const WORKOUTS: Workout[] = SPECS.flatMap((spec) =>
-  spec.items.map((_, index) => buildWorkout(spec, index)),
+  spec.items.map((item, index) => buildWorkout(spec, item, index)),
 );
+
 
 export const WORKOUT_CATEGORIES: WorkoutCategory[] = SPECS.map((s) => s.category);
 
