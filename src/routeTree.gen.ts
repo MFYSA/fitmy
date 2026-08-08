@@ -10,33 +10,180 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as FavoritesRouteImport } from './routes/favorites'
+import { Route as HistoryRouteImport } from './routes/history'
+import { Route as OnboardingRouteImport } from './routes/onboarding'
+import { Route as ProfileRouteImport } from './routes/profile'
+import { Route as ProgressRouteImport } from './routes/progress'
+import { Route as SettingsRouteImport } from './routes/settings'
+import { Route as NutritionIndexRouteImport } from './routes/nutrition.index'
+import { Route as NutritionSlugRouteImport } from './routes/nutrition.$slug'
+import { Route as SessionWorkoutIdRouteImport } from './routes/session.$workoutId'
+import { Route as WorkoutsIndexRouteImport } from './routes/workouts.index'
+import { Route as WorkoutsWorkoutIdRouteImport } from './routes/workouts.$workoutId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FavoritesRoute = FavoritesRouteImport.update({
+  id: '/favorites',
+  path: '/favorites',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HistoryRoute = HistoryRouteImport.update({
+  id: '/history',
+  path: '/history',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OnboardingRoute = OnboardingRouteImport.update({
+  id: '/onboarding',
+  path: '/onboarding',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProfileRoute = ProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProgressRoute = ProgressRouteImport.update({
+  id: '/progress',
+  path: '/progress',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SettingsRoute = SettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NutritionIndexRoute = NutritionIndexRouteImport.update({
+  id: '/nutrition/',
+  path: '/nutrition/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NutritionSlugRoute = NutritionSlugRouteImport.update({
+  id: '/nutrition/$slug',
+  path: '/nutrition/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SessionWorkoutIdRoute = SessionWorkoutIdRouteImport.update({
+  id: '/session/$workoutId',
+  path: '/session/$workoutId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WorkoutsIndexRoute = WorkoutsIndexRouteImport.update({
+  id: '/workouts/',
+  path: '/workouts/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WorkoutsWorkoutIdRoute = WorkoutsWorkoutIdRouteImport.update({
+  id: '/workouts/$workoutId',
+  path: '/workouts/$workoutId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/favorites': typeof FavoritesRoute
+  '/history': typeof HistoryRoute
+  '/onboarding': typeof OnboardingRoute
+  '/profile': typeof ProfileRoute
+  '/progress': typeof ProgressRoute
+  '/settings': typeof SettingsRoute
+  '/nutrition/$slug': typeof NutritionSlugRoute
+  '/session/$workoutId': typeof SessionWorkoutIdRoute
+  '/workouts/$workoutId': typeof WorkoutsWorkoutIdRoute
+  '/nutrition/': typeof NutritionIndexRoute
+  '/workouts/': typeof WorkoutsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/favorites': typeof FavoritesRoute
+  '/history': typeof HistoryRoute
+  '/onboarding': typeof OnboardingRoute
+  '/profile': typeof ProfileRoute
+  '/progress': typeof ProgressRoute
+  '/settings': typeof SettingsRoute
+  '/nutrition/$slug': typeof NutritionSlugRoute
+  '/session/$workoutId': typeof SessionWorkoutIdRoute
+  '/workouts/$workoutId': typeof WorkoutsWorkoutIdRoute
+  '/nutrition': typeof NutritionIndexRoute
+  '/workouts': typeof WorkoutsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/favorites': typeof FavoritesRoute
+  '/history': typeof HistoryRoute
+  '/onboarding': typeof OnboardingRoute
+  '/profile': typeof ProfileRoute
+  '/progress': typeof ProgressRoute
+  '/settings': typeof SettingsRoute
+  '/nutrition/$slug': typeof NutritionSlugRoute
+  '/session/$workoutId': typeof SessionWorkoutIdRoute
+  '/workouts/$workoutId': typeof WorkoutsWorkoutIdRoute
+  '/nutrition/': typeof NutritionIndexRoute
+  '/workouts/': typeof WorkoutsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/favorites'
+    | '/history'
+    | '/onboarding'
+    | '/profile'
+    | '/progress'
+    | '/settings'
+    | '/nutrition/$slug'
+    | '/session/$workoutId'
+    | '/workouts/$workoutId'
+    | '/nutrition/'
+    | '/workouts/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/favorites'
+    | '/history'
+    | '/onboarding'
+    | '/profile'
+    | '/progress'
+    | '/settings'
+    | '/nutrition/$slug'
+    | '/session/$workoutId'
+    | '/workouts/$workoutId'
+    | '/nutrition'
+    | '/workouts'
+  id:
+    | '__root__'
+    | '/'
+    | '/favorites'
+    | '/history'
+    | '/onboarding'
+    | '/profile'
+    | '/progress'
+    | '/settings'
+    | '/nutrition/$slug'
+    | '/session/$workoutId'
+    | '/workouts/$workoutId'
+    | '/nutrition/'
+    | '/workouts/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  FavoritesRoute: typeof FavoritesRoute
+  HistoryRoute: typeof HistoryRoute
+  OnboardingRoute: typeof OnboardingRoute
+  ProfileRoute: typeof ProfileRoute
+  ProgressRoute: typeof ProgressRoute
+  SettingsRoute: typeof SettingsRoute
+  NutritionSlugRoute: typeof NutritionSlugRoute
+  SessionWorkoutIdRoute: typeof SessionWorkoutIdRoute
+  WorkoutsWorkoutIdRoute: typeof WorkoutsWorkoutIdRoute
+  NutritionIndexRoute: typeof NutritionIndexRoute
+  WorkoutsIndexRoute: typeof WorkoutsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,22 +195,100 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/favorites': {
+      id: '/favorites'
+      path: '/favorites'
+      fullPath: '/favorites'
+      preLoaderRoute: typeof FavoritesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/history': {
+      id: '/history'
+      path: '/history'
+      fullPath: '/history'
+      preLoaderRoute: typeof HistoryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/onboarding': {
+      id: '/onboarding'
+      path: '/onboarding'
+      fullPath: '/onboarding'
+      preLoaderRoute: typeof OnboardingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/profile': {
+      id: '/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/progress': {
+      id: '/progress'
+      path: '/progress'
+      fullPath: '/progress'
+      preLoaderRoute: typeof ProgressRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/nutrition/': {
+      id: '/nutrition/'
+      path: '/nutrition'
+      fullPath: '/nutrition/'
+      preLoaderRoute: typeof NutritionIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/nutrition/$slug': {
+      id: '/nutrition/$slug'
+      path: '/nutrition/$slug'
+      fullPath: '/nutrition/$slug'
+      preLoaderRoute: typeof NutritionSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/session/$workoutId': {
+      id: '/session/$workoutId'
+      path: '/session/$workoutId'
+      fullPath: '/session/$workoutId'
+      preLoaderRoute: typeof SessionWorkoutIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/workouts/': {
+      id: '/workouts/'
+      path: '/workouts'
+      fullPath: '/workouts/'
+      preLoaderRoute: typeof WorkoutsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/workouts/$workoutId': {
+      id: '/workouts/$workoutId'
+      path: '/workouts/$workoutId'
+      fullPath: '/workouts/$workoutId'
+      preLoaderRoute: typeof WorkoutsWorkoutIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  FavoritesRoute: FavoritesRoute,
+  HistoryRoute: HistoryRoute,
+  OnboardingRoute: OnboardingRoute,
+  ProfileRoute: ProfileRoute,
+  ProgressRoute: ProgressRoute,
+  SettingsRoute: SettingsRoute,
+  NutritionSlugRoute: NutritionSlugRoute,
+  SessionWorkoutIdRoute: SessionWorkoutIdRoute,
+  WorkoutsWorkoutIdRoute: WorkoutsWorkoutIdRoute,
+  NutritionIndexRoute: NutritionIndexRoute,
+  WorkoutsIndexRoute: WorkoutsIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
