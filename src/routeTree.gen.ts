@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as OnboardingRouteImport } from './routes/onboarding'
 import { Route as ProgressRouteImport } from './routes/progress'
 import { Route as NutritionIndexRouteImport } from './routes/nutrition.index'
+import { Route as NutritionSlugRouteImport } from './routes/nutrition.$slug'
 import { Route as SessionWorkoutIdRouteImport } from './routes/session.$workoutId'
 import { Route as WorkoutsIndexRouteImport } from './routes/workouts.index'
 import { Route as WorkoutsWorkoutIdRouteImport } from './routes/workouts.$workoutId'
@@ -37,6 +38,11 @@ const NutritionIndexRoute = NutritionIndexRouteImport.update({
   path: '/nutrition/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const NutritionSlugRoute = NutritionSlugRouteImport.update({
+  id: '/nutrition/$slug',
+  path: '/nutrition/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SessionWorkoutIdRoute = SessionWorkoutIdRouteImport.update({
   id: '/session/$workoutId',
   path: '/session/$workoutId',
@@ -57,6 +63,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/onboarding': typeof OnboardingRoute
   '/progress': typeof ProgressRoute
+  '/nutrition/$slug': typeof NutritionSlugRoute
   '/session/$workoutId': typeof SessionWorkoutIdRoute
   '/workouts/$workoutId': typeof WorkoutsWorkoutIdRoute
   '/nutrition/': typeof NutritionIndexRoute
@@ -66,6 +73,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/onboarding': typeof OnboardingRoute
   '/progress': typeof ProgressRoute
+  '/nutrition/$slug': typeof NutritionSlugRoute
   '/session/$workoutId': typeof SessionWorkoutIdRoute
   '/workouts/$workoutId': typeof WorkoutsWorkoutIdRoute
   '/nutrition': typeof NutritionIndexRoute
@@ -76,6 +84,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/onboarding': typeof OnboardingRoute
   '/progress': typeof ProgressRoute
+  '/nutrition/$slug': typeof NutritionSlugRoute
   '/session/$workoutId': typeof SessionWorkoutIdRoute
   '/workouts/$workoutId': typeof WorkoutsWorkoutIdRoute
   '/nutrition/': typeof NutritionIndexRoute
@@ -87,6 +96,7 @@ export interface FileRouteTypes {
     | '/'
     | '/onboarding'
     | '/progress'
+    | '/nutrition/$slug'
     | '/session/$workoutId'
     | '/workouts/$workoutId'
     | '/nutrition/'
@@ -96,6 +106,7 @@ export interface FileRouteTypes {
     | '/'
     | '/onboarding'
     | '/progress'
+    | '/nutrition/$slug'
     | '/session/$workoutId'
     | '/workouts/$workoutId'
     | '/nutrition'
@@ -105,6 +116,7 @@ export interface FileRouteTypes {
     | '/'
     | '/onboarding'
     | '/progress'
+    | '/nutrition/$slug'
     | '/session/$workoutId'
     | '/workouts/$workoutId'
     | '/nutrition/'
@@ -115,6 +127,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   OnboardingRoute: typeof OnboardingRoute
   ProgressRoute: typeof ProgressRoute
+  NutritionSlugRoute: typeof NutritionSlugRoute
   SessionWorkoutIdRoute: typeof SessionWorkoutIdRoute
   WorkoutsWorkoutIdRoute: typeof WorkoutsWorkoutIdRoute
   NutritionIndexRoute: typeof NutritionIndexRoute
@@ -151,6 +164,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof NutritionIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/nutrition/$slug': {
+      id: '/nutrition/$slug'
+      path: '/nutrition/$slug'
+      fullPath: '/nutrition/$slug'
+      preLoaderRoute: typeof NutritionSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/session/$workoutId': {
       id: '/session/$workoutId'
       path: '/session/$workoutId'
@@ -179,6 +199,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   OnboardingRoute: OnboardingRoute,
   ProgressRoute: ProgressRoute,
+  NutritionSlugRoute: NutritionSlugRoute,
   SessionWorkoutIdRoute: SessionWorkoutIdRoute,
   WorkoutsWorkoutIdRoute: WorkoutsWorkoutIdRoute,
   NutritionIndexRoute: NutritionIndexRoute,
