@@ -117,10 +117,13 @@ export function FitLifeProvider({ children }: { children: React.ReactNode }) {
     const media = window.matchMedia("(prefers-color-scheme: dark)");
 
     const apply = () => {
+      // Dark is the native palette (:root); light mode is an explicit opt-in class.
       const dark =
         state.settings.theme === "dark" || (state.settings.theme === "system" && media.matches);
       root.classList.toggle("dark", dark);
+      root.classList.toggle("light", !dark);
     };
+
 
     apply();
     media.addEventListener("change", apply);
