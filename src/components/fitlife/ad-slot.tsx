@@ -1,22 +1,18 @@
+"use client";
+
+import { useRouterState } from "@tanstack/react-router";
+
+import { AD_CONFIG, adUnits, isAdBlockedPath } from "@/lib/fitlife/ads";
 import { cn } from "@/lib/utils";
 
 /**
- * AdMob placeholder slot.
+ * Banner ad slot.
  *
- * Ads are OFF by default (see AppSettings.adsEnabled) and are never rendered
- * during workouts or countdown timers. To go live:
- *   1. Wrap the app with Capacitor and install @capacitor-community/admob
- *      (or swap in AdSense for the pure-web build).
- *   2. Put your unit IDs in AD_UNITS below.
- *   3. Replace the placeholder markup with the real banner view.
+ * Ads are OFF by default (see AppSettings.adsEnabled) and are automatically
+ * suppressed on workout/countdown routes (see AD_CONFIG.blockedPathPrefixes).
+ * On the web build this renders a reserved placeholder; inside a Capacitor
+ * wrapper the native AdMob banner is displayed in the same space.
  */
-export const AD_UNITS = {
-  // Google's official test IDs — safe for development.
-  androidBanner: "ca-app-pub-3940256099942544/6300978111",
-  androidInterstitial: "ca-app-pub-3940256099942544/1033173712",
-  webAdSlot: "",
-} as const;
-
 export function AdSlot({
   enabled,
   label = "Advertisement",
@@ -26,17 +22,21 @@ export function AdSlot({
   label?: string;
   className?: string;
 }) {
-  if (!enabled) return null;
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+
+  if (!enabled || isAdBlockedPath(pathname)) return null;
 
   return (
     <div
+      role="complementary"
       aria-label={label}
+      data-ad-unit={adUnits().banner}
       className={cn(
         "flex h-14 items-center justify-center rounded-xl border border-dashed border-border bg-muted text-xs text-muted-foreground",
         className,
       )}
     >
-      Ad space (test mode)
+      {AD_CONFIG.testMode ? "Ad space (test mode)" : "Ad space"}
     </div>
   );
 }

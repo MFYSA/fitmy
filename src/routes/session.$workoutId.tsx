@@ -18,6 +18,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { getExercise } from "@/lib/fitlife/exercises";
+import { showInterstitial } from "@/lib/fitlife/ads";
 import { formatDuration } from "@/lib/fitlife/logic";
 import { useFitLife } from "@/lib/fitlife/store";
 import type { Workout } from "@/lib/fitlife/types";
@@ -133,6 +134,8 @@ function SessionScreen() {
       exercisesCompleted: steps.length,
     });
     setSavedXp(result.xp);
+    // Interstitial only on the summary screen — never during the timer.
+    void showInterstitial();
   }, [phase, savedXp, elapsed, completeWorkout, workout, steps.length]);
 
   const totalSeconds = steps.reduce((sum, step) => sum + step.seconds + step.restSeconds, 0);

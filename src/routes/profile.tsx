@@ -3,6 +3,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Bell, Droplets, Flame, LogOut, Settings, Trophy } from "lucide-react";
 
+import { AdSlot } from "@/components/fitlife/ad-slot";
 import { AppShell } from "@/components/fitlife/app-shell";
 import { LogWeightDialog } from "@/components/fitlife/log-weight-dialog";
 import { OnboardingGate } from "@/components/fitlife/onboarding-gate";
@@ -208,6 +209,8 @@ function ProfileScreen() {
             </Link>
           </Button>
         </div>
+
+        <AdSlot enabled={state.settings.adsEnabled} />
       </div>
     </AppShell>
   );
