@@ -56,9 +56,10 @@ async function loadAdMob(): Promise<AdMobLike | null> {
   if (!adMobPromise) {
     adMobPromise = (async () => {
       try {
-        const mod = (await import(
-          /* @vite-ignore */ "@capacitor-community/admob"
-        )) as unknown as { AdMob?: AdMobLike };
+        const specifier = "@capacitor-community/admob";
+        const mod = (await import(/* @vite-ignore */ specifier)) as unknown as {
+          AdMob?: AdMobLike;
+        };
         return mod.AdMob ?? null;
       } catch {
         return null; // web build — plugin not installed
