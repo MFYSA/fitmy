@@ -11,7 +11,9 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { initAds } from "../lib/fitlife/ads";
 import { FitLifeProvider } from "../lib/fitlife/store";
+
 import { Toaster } from "../components/ui/sonner";
 
 function NotFoundComponent() {
@@ -121,6 +123,11 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+
+  useEffect(() => {
+    void initAds();
+  }, []);
+
 
   return (
     <QueryClientProvider client={queryClient}>
