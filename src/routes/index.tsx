@@ -52,10 +52,11 @@ function HomeScreen() {
 
   const pool = WORKOUTS.filter((w) => w.difficulty === state.profile.fitnessLevel);
   const day = new Date().getDate();
-  const recommended = pool.length ? pool[day % pool.length] : WORKOUTS[0];
-  const upNext = pool.length
-    ? [pool[(day + 1) % pool.length], pool[(day + 2) % pool.length], pool[(day + 3) % pool.length]]
-    : WORKOUTS.slice(0, 3);
+  const deck = pool.length ? pool : WORKOUTS;
+  const recommended = deck[day % deck.length];
+  const upNext = [1, 2, 3]
+    .map((offset) => deck[(day + offset) % deck.length])
+    .filter((w): w is (typeof deck)[number] => Boolean(w));
 
   const workoutPercent = Math.min(100, (today.workouts / today.workoutTarget) * 100);
   const waterPercent = Math.min(100, (today.water / today.waterTarget) * 100);
@@ -192,7 +193,7 @@ function HomeScreen() {
             Up next for you
           </h2>
           <ul className="space-y-2">
-            {upNext.filter(Boolean).map((workout) => (
+            {upNext.map((workout) => (
               <li key={workout.id}>
                 <WorkoutCard workout={workout} size="compact" />
               </li>
