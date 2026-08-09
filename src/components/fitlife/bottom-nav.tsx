@@ -5,10 +5,21 @@ import { cn } from "@/lib/utils";
 
 const TABS = [
   { to: "/", label: "Home", icon: Home, match: (p: string) => p === "/" },
-  { to: "/workouts", label: "Workouts", icon: Dumbbell, match: (p: string) => p.startsWith("/workouts") || p.startsWith("/favorites") || p.startsWith("/history") },
+  {
+    to: "/workouts",
+    label: "Train",
+    icon: Dumbbell,
+    match: (p: string) =>
+      p.startsWith("/workouts") || p.startsWith("/favorites") || p.startsWith("/history"),
+  },
   { to: "/progress", label: "Progress", icon: TrendingUp, match: (p: string) => p.startsWith("/progress") },
-  { to: "/nutrition", label: "Nutrition", icon: Apple, match: (p: string) => p.startsWith("/nutrition") },
-  { to: "/profile", label: "Profile", icon: User, match: (p: string) => p.startsWith("/profile") || p.startsWith("/settings") || p.startsWith("/goals") },
+  { to: "/nutrition", label: "Fuel", icon: Apple, match: (p: string) => p.startsWith("/nutrition") },
+  {
+    to: "/profile",
+    label: "You",
+    icon: User,
+    match: (p: string) => p.startsWith("/profile") || p.startsWith("/settings"),
+  },
 ] as const;
 
 export function BottomNav() {
@@ -17,9 +28,9 @@ export function BottomNav() {
   return (
     <nav
       aria-label="Main navigation"
-      className="safe-bottom fixed inset-x-0 bottom-0 z-40 border-t border-border bg-card/95 backdrop-blur"
+      className="fixed inset-x-0 bottom-0 z-40 safe-bottom px-3 pb-3"
     >
-      <ul className="mx-auto flex max-w-lg items-stretch justify-between px-2">
+      <ul className="mx-auto flex max-w-lg items-stretch justify-between gap-1 rounded-full border border-border bg-card/85 px-2 py-1.5 shadow-nav backdrop-blur-xl">
         {TABS.map((tab) => {
           const active = tab.match(pathname);
           const Icon = tab.icon;
@@ -29,19 +40,14 @@ export function BottomNav() {
                 to={tab.to}
                 aria-current={active ? "page" : undefined}
                 className={cn(
-                  "flex min-h-14 flex-col items-center justify-center gap-1 rounded-xl px-1 py-2 text-[11px] font-medium transition-colors",
-                  active ? "text-primary" : "text-muted-foreground hover:text-foreground",
+                  "flex min-h-12 flex-col items-center justify-center gap-0.5 rounded-full px-1 py-1.5 transition-colors",
+                  active
+                    ? "bg-primary text-primary-foreground"
+                    : "text-muted-foreground hover:text-foreground",
                 )}
               >
-                <span
-                  className={cn(
-                    "flex h-7 w-12 items-center justify-center rounded-full transition-colors",
-                    active && "bg-primary-soft",
-                  )}
-                >
-                  <Icon className="h-5 w-5" aria-hidden="true" />
-                </span>
-                {tab.label}
+                <Icon className="h-[18px] w-[18px]" aria-hidden="true" />
+                <span className="text-[10px] font-bold uppercase tracking-widest">{tab.label}</span>
               </Link>
             </li>
           );
