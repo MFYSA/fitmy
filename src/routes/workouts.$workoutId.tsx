@@ -12,6 +12,7 @@ import { getExercise } from "@/lib/fitlife/exercises";
 import { formatDuration } from "@/lib/fitlife/logic";
 import { useFitLife } from "@/lib/fitlife/store";
 import { getWorkout } from "@/lib/fitlife/workouts";
+import { workoutImage } from "@/lib/fitlife/workout-images";
 import type { Workout } from "@/lib/fitlife/types";
 import { cn } from "@/lib/utils";
 
@@ -64,22 +65,6 @@ function WorkoutDetailRoute() {
   );
 }
 
-const CATEGORY_EMOJI: Record<string, string> = {
-  Beginner: "🌱",
-  "Full Body": "🔥",
-  "Upper Body": "💪",
-  "Lower Body": "🦵",
-  Chest: "🫀",
-  Back: "🎽",
-  Arms: "💪",
-  Legs: "🦵",
-  "Abs/Core": "🧘",
-  Cardio: "🏃",
-  Stretching: "🤸",
-  "Home Workout": "🏠",
-  "No Equipment": "✨",
-};
-
 function WorkoutDetail() {
   const { workout } = Route.useLoaderData() as { workout: Workout };
   const { state, toggleFavorite } = useFitLife();
@@ -105,11 +90,17 @@ function WorkoutDetail() {
       }
     >
       <div className="space-y-5">
-        <div className="gradient-primary flex h-40 items-center justify-center rounded-2xl shadow-raised">
-          <span className="text-6xl" aria-hidden="true">
-            {CATEGORY_EMOJI[workout.category] ?? "💪"}
-          </span>
-          <span className="sr-only">{workout.category} workout illustration</span>
+        <div className="relative aspect-16/10 overflow-hidden rounded-2xl border border-border">
+          <img
+            src={workoutImage(workout.id)}
+            alt={`${workout.name} — ${workout.muscle} training`}
+            className="absolute inset-0 h-full w-full object-cover"
+          />
+          <div className="photo-scrim absolute inset-0" aria-hidden="true" />
+          <div className="absolute inset-x-0 bottom-0 p-4">
+            <p className="kicker">{workout.category}</p>
+            <h2 className="display-title text-3xl">{workout.name}</h2>
+          </div>
         </div>
 
         <div>
@@ -134,7 +125,7 @@ function WorkoutDetail() {
         </div>
 
         <section aria-labelledby="exercises-heading">
-          <h2 id="exercises-heading" className="mb-3 text-sm font-semibold">
+          <h2 id="exercises-heading" className="kicker mb-3">
             Exercises · {formatDuration(totalWork)} of work
           </h2>
           <ol className="space-y-2">

@@ -150,7 +150,7 @@ function SessionScreen() {
           <Check className="h-12 w-12 text-primary-foreground" aria-hidden="true" />
         </div>
         <div>
-          <h1 className="text-3xl font-bold">Workout complete!</h1>
+          <h1 className="display-title text-4xl">Workout complete</h1>
           <p className="mt-1 text-muted-foreground">{workout.name}</p>
         </div>
         <dl className="grid w-full max-w-sm grid-cols-3 gap-3">
@@ -212,7 +212,7 @@ function SessionScreen() {
           {phase === "rest" ? "Rest" : "Work"}
         </p>
 
-        <h1 className="text-3xl font-bold leading-tight">
+        <h1 className="display-title text-4xl">
           {phase === "rest" ? "Take a breath" : (exercise?.name ?? "Exercise")}
         </h1>
 
@@ -223,7 +223,7 @@ function SessionScreen() {
           }}
         >
           <div className="flex h-44 w-44 flex-col items-center justify-center rounded-full bg-card">
-            <span className="text-5xl font-bold tabular-nums" aria-live="polite">
+            <span className="display-title text-5xl tabular-nums" aria-live="polite">
               {formatDuration(remaining)}
             </span>
             <span className="text-xs text-muted-foreground">remaining</span>
@@ -294,8 +294,8 @@ function SessionScreen() {
 function SummaryStat({ label, value }: { label: string; value: string }) {
   return (
     <div className="surface-card p-3">
-      <dt className="text-[11px] text-muted-foreground">{label}</dt>
-      <dd className="text-lg font-bold">{value}</dd>
+      <dt className="kicker">{label}</dt>
+      <dd className="display-title text-lg">{value}</dd>
     </div>
   );
 }

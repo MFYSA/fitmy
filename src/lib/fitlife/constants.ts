@@ -76,7 +76,7 @@ export function createInitialState(): AppState {
       dailyWorkoutTarget: 1,
     },
     settings: {
-      theme: "system",
+      theme: "dark",
       notifications: true,
       waterReminders: true,
       workoutReminders: true,
