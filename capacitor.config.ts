@@ -10,7 +10,7 @@ import type { CapacitorConfig } from "@capacitor/cli";
 const config: CapacitorConfig = {
   appId: "app.fitlife.tracker",
   appName: "FitLife",
-  webDir: "dist-android",
+  webDir: "dist-android/client",
   android: {
     allowMixedContent: false,
   },
