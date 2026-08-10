@@ -1,8 +1,9 @@
 "use client";
 
 import { useRouterState } from "@tanstack/react-router";
+import * as React from "react";
 
-import { AD_CONFIG, adUnits, isAdBlockedPath } from "@/lib/fitlife/ads";
+import { AD_CONFIG, adUnits, hideBanner, isAdBlockedPath, showBanner } from "@/lib/fitlife/ads";
 import { cn } from "@/lib/utils";
 
 /**
@@ -10,8 +11,9 @@ import { cn } from "@/lib/utils";
  *
  * Ads are OFF by default (see AppSettings.adsEnabled) and are automatically
  * suppressed on workout/countdown routes (see AD_CONFIG.blockedPathPrefixes).
- * On the web build this renders a reserved placeholder; inside a Capacitor
- * wrapper the native AdMob banner is displayed in the same space.
+ * On the web build this renders a reserved placeholder; inside the Capacitor
+ * Android shell the native AdMob banner is anchored to the bottom of the screen
+ * while this slot reserves the same vertical space.
  */
 export function AdSlot({
   enabled,
@@ -23,8 +25,20 @@ export function AdSlot({
   className?: string;
 }) {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const active = enabled && !isAdBlockedPath(pathname);
 
-  if (!enabled || isAdBlockedPath(pathname)) return null;
+  React.useEffect(() => {
+    if (!active) {
+      void hideBanner();
+      return;
+    }
+    void showBanner();
+    return () => {
+      void hideBanner();
+    };
+  }, [active]);
+
+  if (!active) return null;
 
   return (
     <div
@@ -40,3 +54,4 @@ export function AdSlot({
     </div>
   );
 }
+
