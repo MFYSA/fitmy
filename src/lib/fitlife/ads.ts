@@ -44,15 +44,29 @@ type AdMobLike = {
   initialize: (options: unknown) => Promise<unknown>;
   prepareInterstitial: (options: unknown) => Promise<unknown>;
   showInterstitial: () => Promise<unknown>;
+  showBanner: (options: unknown) => Promise<unknown>;
+  hideBanner: () => Promise<unknown>;
+  removeBanner: () => Promise<unknown>;
 };
 
 let adMobPromise: Promise<AdMobLike | null> | null = null;
 let initialized = false;
 let lastInterstitialAt = 0;
 
+/** True only inside the Capacitor Android/iOS shell. */
+export async function isNativeApp() {
+  if (typeof window === "undefined") return false;
+  try {
+    const { Capacitor } = await import("@capacitor/core");
+    return Capacitor.isNativePlatform();
+  } catch {
+    return false;
+  }
+}
+
 /** Resolves the native plugin when running inside Capacitor, else null. */
 async function loadAdMob(): Promise<AdMobLike | null> {
-  if (typeof window === "undefined") return null;
+  if (!(await isNativeApp())) return null;
   if (!adMobPromise) {
     adMobPromise = (async () => {
       try {
@@ -74,11 +88,46 @@ export async function initAds() {
   const adMob = await loadAdMob();
   if (!adMob) return;
   initialized = true;
-  await adMob.initialize({
-    initializeForTesting: AD_CONFIG.testMode,
-    testingDevices: [],
-  });
+  try {
+    await adMob.initialize({
+      initializeForTesting: AD_CONFIG.testMode,
+      testingDevices: [],
+    });
+  } catch {
+    initialized = false;
+  }
 }
+
+/** Shows the native anchored banner. No-op on the web build. */
+export async function showBanner() {
+  const adMob = await loadAdMob();
+  if (!adMob) return false;
+  try {
+    await initAds();
+    await adMob.showBanner({
+      adId: adUnits().banner,
+      adSize: "ADAPTIVE_BANNER",
+      position: "BOTTOM_CENTER",
+      margin: 0,
+      isTesting: AD_CONFIG.testMode,
+    });
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+/** Hides the native banner (used on workout/session screens). */
+export async function hideBanner() {
+  const adMob = await loadAdMob();
+  if (!adMob) return;
+  try {
+    await adMob.hideBanner();
+  } catch {
+    /* banner was never shown */
+  }
+}
+
 
 /**
  * Shows an interstitial if allowed. Returns whether one was displayed.
