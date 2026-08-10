@@ -1,5 +1,13 @@
 apply plugin: 'com.android.application'
 
+// Release signing is read from android/keystore.properties (git-ignored).
+// See ANDROID.md for how to create your upload keystore.
+def keystorePropsFile = rootProject.file("keystore.properties")
+def keystoreProps = new Properties()
+if (keystorePropsFile.exists()) {
+    keystoreProps.load(new FileInputStream(keystorePropsFile))
+}
+
 android {
     namespace = "app.fitlife.tracker"
     compileSdk = rootProject.ext.compileSdkVersion
@@ -16,10 +24,23 @@ android {
             ignoreAssetsPattern = '!.svn:!.git:!.ds_store:!*.scc:.*:!CVS:!thumbs.db:!picasa.ini:!*~'
         }
     }
+    signingConfigs {
+        release {
+            if (keystoreProps.containsKey("storeFile")) {
+                storeFile file(keystoreProps["storeFile"])
+                storePassword keystoreProps["storePassword"]
+                keyAlias keystoreProps["keyAlias"]
+                keyPassword keystoreProps["keyPassword"]
+            }
+        }
+    }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            if (keystoreProps.containsKey("storeFile")) {
+                signingConfig signingConfigs.release
+            }
         }
     }
 }
